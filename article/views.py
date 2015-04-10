@@ -8,12 +8,17 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import Http404
 from article.forms import CommentForm
 from django.core.context_processors import csrf
+from django.core.paginator import Paginator
 from django.contrib import auth
 
 # Create your views here.
 
-def articles(request):
-    return render_to_response('articles.html', {'articles': Article.objects.all(), 'username': auth.get_user(request).username })
+def articles(request, page_number=1):
+    all_articles = Article.objects.all()
+    current_page = Paginator(all_articles, 3)
+
+
+    return render_to_response('articles.html', {'articles': current_page.page(page_number), 'username': auth.get_user(request).username })
 
 def article(request, article_id = 1):
     comment_from = CommentForm
