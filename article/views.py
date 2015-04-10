@@ -31,19 +31,21 @@ def article(request, article_id = 1):
     return render_to_response('article.html',args)
 
 def addlike(request, article_id = 1):
+    return_path  = request.META.get('HTTP_REFERER','/')
     try:
         if article_id in request.COOKIES:
-            redirect("/")
+            redirect(return_path)
         else:
             article = Article.objects.get(id=article_id)
             article.article_likes +=1
             article.save()
-            response = redirect("/")
+            response = redirect(return_path)
             response.set_cookie(article_id,"test")
             return response
     except ObjectDoesNotExist:
         raise Http404
-    return redirect('/')
+
+    return redirect(return_path)
 
 def addcomment(request, article_id):
     if request.POST and ("pause") not in request.session:
