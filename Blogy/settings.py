@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'article',
     'loginsys',
 
+
 )
 
 MIDDLEWARE_CLASSES = (

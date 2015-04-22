@@ -9,6 +9,7 @@
     <p>Комментарии:</p>
         {% for comment in comments %}
             <p>{{ comment.comments_text }}</p>
+            <p>{{ comment.comments_author.username }} {{ comment.comments_date }}</p>
         {% endfor %}
     {% if username %}
     <form action="/addcomment/{{ article.id }}/" method="post">

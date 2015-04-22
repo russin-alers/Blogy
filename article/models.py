@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Article(models.Model):
@@ -22,5 +23,6 @@ class Comments(models.Model):
     class Meta():
         db_table = "comments"
 
+    comments_date = models.DateTimeField(blank=True)
     comments_text = models.TextField(verbose_name="Комментарий")
     comments_acticle = models.ForeignKey(Article)

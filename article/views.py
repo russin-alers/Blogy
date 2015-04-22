@@ -10,6 +10,10 @@ from article.forms import CommentForm
 from django.core.context_processors import csrf
 from django.core.paginator import Paginator
 from django.contrib import auth
+from django.contrib.auth import views
+
+import datetime
+
 
 # Create your views here.
 
@@ -53,8 +57,9 @@ def addcomment(request, article_id):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.comments_acticle = Article.objects.get(id = article_id)
+            comment.comments_date = datetime.datetime.now()
             form.save()
-            request.session.set_expiry(60)
+            request.session.set_expiry(3)
             request.session['pause'] = True
 
     return redirect("/get/%s" % article_id)
